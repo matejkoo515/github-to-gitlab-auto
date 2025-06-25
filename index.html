@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GitHub to GitLab Auto Update - Bocaletto Luca</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      background: #fafafa; 
+      margin: 20px; 
+      line-height: 1.6;
+    }
+    .container { 
+      max-width: 800px; 
+      margin: auto; 
+      padding: 20px; 
+      background: #fff; 
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2, h3 { color: #333; }
+    pre { 
+      background: #f4f4f4; 
+      padding: 10px; 
+      border-radius: 5px; 
+      overflow-x: auto; 
+    }
+    code { 
+      font-family: "Courier New", monospace; 
+      color: #c7254e;
+      background-color: #f9f2f4;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    a { color: #0066cc; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>GitHub to GitLab Auto Update</h1>
+    <p>
+      Questo progetto permette di configurare automaticamente il mirroring dei repository dal tuo account GitHub a GitLab,
+      rendendo semplice mantenere sincronizzati tutti i tuoi repository.
+    </p>
+    
+    <h2>Informazioni Generali</h2>
+    <ul>
+      <li><strong>Account GitHub:</strong> bocaletto-luca</li>
+      <li><strong>Account GitLab:</strong> bocaletto-luca</li>
+      <li><strong>Nome del Progetto:</strong> github-to-gitlab-auto-update</li>
+      <li><strong>Descrizione:</strong> Script Python per automatizzare la sincronizzazione (mirroring) dei repository GitHub in GitLab.</li>
+    </ul>
+    
+    <h2>Requisiti</h2>
+    <ul>
+      <li>Python 3</li>
+      <li>Modulo Python: <code>requests</code> (installabile con <code>pip install requests</code>)</li>
+      <li>Accesso alle API di GitHub e GitLab</li>
+    </ul>
+    
+    <h2>Configurazione</h2>
+    <h3>1. Ottenere i Token di Accesso Personale</h3>
+    <ol>
+      <li>
+        <strong>Token GitHub:</strong>
+        <p>
+          Vai su <a href="https://github.com/settings/tokens" target="_blank">GitHub Settings &gt; Tokens</a> e genera un nuovo token con il permesso <code>repo</code> (e altri scope se necessari).
+        </p>
+      </li>
+      <li>
+        <strong>Token GitLab:</strong>
+        <p>
+          Accedi a <a href="https://gitlab.com/profile/personal_access_tokens" target="_blank">GitLab Personal Access Tokens</a> e crea un nuovo token con lo scope <code>api</code>.
+        </p>
+      </li>
+      <li>
+        <em>Importante:</em> Non inserire mai i token in chiaro nel repository pubblico. Modifica il file dello script in modo da leggere i token da variabili d'ambiente o file di configurazione locali.
+      </li>
+    </ol>
+    
+    <h3>2. Configurare lo Script</h3>
+    <p>
+      Modifica il file <code>github_to_gitlab_auto_update.py</code> e aggiorna le seguenti variabili:
+    </p>
+    <pre><code>GITHUB_USERNAME = "bocaletto-luca"  # Il tuo username GitHub
+GITHUB_TOKEN  = "your_github_token_here"  # Sostituisci con il tuo token GitHub
+GITLAB_TOKEN  = "your_gitlab_token_here"  # Sostituisci con il tuo token GitLab</code></pre>
+    
+    <h3>3. Eseguire lo Script</h3>
+    <p>
+      Dal terminale, rendi eseguibile lo script (se necessario) e poi eseguilo:
+    </p>
+    <pre><code>chmod +x github_to_gitlab_auto_update.py
+python3 github_to_gitlab_auto_update.py</code></pre>
+    
+    <h2>Come Funziona</h2>
+    <p>
+      Lo script esegue le seguenti operazioni:
+    </p>
+    <ul>
+      <li>Recupera tutti i progetti GitLab in cui sei membro tramite l'API di GitLab.</li>
+      <li>Per ciascun progetto, costruisce l'URL del corrispondente repository su GitHub (basato sul nome della repository).</li>
+      <li>Configura il mirroring nel progetto GitLab verso il repository su GitHub, in modo che ogni aggiornamento effettuato su GitHub venga propagato automaticamente su GitLab.</li>
+    </ul>
+    
+    <h2>Note Importanti</h2>
+    <ul>
+      <li>Verifica che il nome del repository su GitHub corrisponda esattamente al campo <code>path</code> del progetto su GitLab.</li>
+      <li>Testa lo script su un sottoinsieme di repository prima di applicarlo a tutti i tuoi progetti.</li>
+      <li>Consulta i log di esecuzione per eventuali errori e assicurati che i token siano stati configurati correttamente.</li>
+    </ul>
+    
+    <h2>Contributi</h2>
+    <p>
+      Il progetto è open source. Se desideri contribuire miglioramenti o segnalare eventuali problemi, apri una issue o un pull request
+      nel repository.
+    </p>
+    
+    <h2>Licenza</h2>
+    <p>
+      Distribuito con licenza MIT. Consulta il file <code>LICENSE</code> per ulteriori dettagli.
+    </p>
+    
+    <hr>
+    <p>Creato da <strong>bocaletto-luca</strong>.</p>
+  </div>
+</body>
+</html>

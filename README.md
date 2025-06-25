@@ -1,118 +1,122 @@
 # GitHub to GitLab Auto Update
+#### Author: Bocaletto Luca
 
-**GitHub to GitLab Auto Update** è un progetto Python che automatizza la configurazione del mirroring tra i repository del tuo account GitHub e GitLab. Utilizzando le API di GitLab, lo script recupera tutti i progetti di cui sei membro su GitLab e configura, per ciascuno, il mirroring verso il repository corrispondente su GitHub. In questo modo, ogni aggiornamento fatto su GitHub verrà automaticamente sincronizzato su GitLab.
+**GitHub to GitLab Auto Update** is a Python-based tool designed to automate the configuration of repository mirroring between your GitHub and GitLab accounts. With this tool, you can automatically import new repositories from GitHub and update existing ones on GitLab, ensuring that the two platforms remain synchronized.
 
-## Indice
+## Table of Contents
 
-- [Panoramica](#panoramica)
-- [Caratteristiche](#caratteristiche)
-- [Requisiti](#requisiti)
-- [Installazione](#installazione)
-- [Configurazione](#configurazione)
-- [Utilizzo](#utilizzo)
-- [Come Funziona](#come-funziona)
-- [Contributi](#contributi)
-- [Licenza](#licenza)
+- [Overview](#overview)
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [How It Works](#how-it-works)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Panoramica
+## Overview
 
-Questo progetto si propone di risolvere il problema di dover aggiornare manualmente i repository importati da GitHub su GitLab.  
-Con **GitHub to GitLab Auto Update**, puoi:
+Managing and updating hundreds of repositories manually is time-consuming. This project retrieves all GitLab projects that you are a member of using the GitLab API and automatically sets up mirroring to the corresponding GitHub repositories. By doing so, any update on GitHub is automatically synchronized to GitLab.
 
-- Configurare automaticamente il mirroring dei repository in blocco.
-- Mantenere sincronizzati i progetti, evitando operazioni ripetitive.
-- Utilizzare uno script semplice, basato su Python e la libreria `requests`, per interagire con le API di GitLab.
+- **GitHub Account:** `bocaletto-luca`
+- **GitLab Account:** `bocaletto-luca`
+- **Project Name:** `github-to-gitlab-auto-update`
 
-## Caratteristiche
+## Features
 
-- **Automazione Completa:** Recupera tutti i progetti GitLab e configura il mirroring verso GitHub in automatico.
-- **Facilità di Configurazione:** Basta impostare le variabili di configurazione con il tuo username e i token.
-- **Supporto per Progetti Multipli:** Ideale per account con centinaia di repository.
-- **Personalizzabile:** Puoi adattare lo script per gestire casi particolari, ad esempio se i nomi dei repository non coincidono perfettamente.
+- **Automated Mirroring Setup:** Automatically configures repository mirroring for all your GitLab projects.
+- **Bulk Operations:** Efficiently handles a large number (over 220) of repositories.
+- **Easy Configuration:** Customize by simply updating a few variables.
+- **Secure:** Use personal access tokens (PATs) for authentication with GitHub and GitLab. (Remember to handle your tokens securely!)
 
-## Requisiti
+## Requirements
 
 - **Python 3.x**
-- **Libreria Python `requests`:** Installabile con:
-  ```bash
-  pip install requests
-  ```
-- **Token di accesso:**
-  - **GitHub Personal Access Token**: Con scope `repo` (richiesto per leggere i repository).
-  - **GitLab Personal Access Token**: Con scope `api` (necessario per modificare le impostazioni dei progetti).
+- **Python Module `requests`** (Install via `pip install requests`)
+- **Personal Access Tokens:**
+  - **GitHub PAT:** Must have the `repo` scope to access private and public repositories.
+  - **GitLab PAT:** Must have the `api` scope for modifying project settings.
 
-## Installazione
+## Installation
 
-1. **Clona il repository:**
+1. **Clone the Repository:**
+
    ```bash
    git clone https://github.com/bocaletto-luca/github-to-gitlab-auto-update.git
    ```
-2. **Entra nella directory del progetto:**
+
+2. **Navigate to the Project Directory:**
+
    ```bash
    cd github-to-gitlab-auto-update
    ```
-3. **(Opzionale) Crea un ambiente virtuale e attivalo:**
+
+3. **(Optional) Create and Activate a Virtual Environment:**
+
    ```bash
    python3 -m venv venv
    source venv/bin/activate
    ```
-4. **Installa la libreria richiesta:**
+
+4. **Install Required Dependencies:**
+
    ```bash
    pip install requests
    ```
 
-## Configurazione
+## Configuration
 
-Modifica il file `github_to_gitlab_auto_update.py` per aggiornare le variabili di configurazione all'inizio del file:
+Update the configuration variables in the `github_to_gitlab_auto_update.py` file at the beginning of the script:
 
 ```python
-# Configurazione
-GITLAB_URL = "https://gitlab.com/api/v4"
-GITHUB_USERNAME = "bocaletto-luca"  # Il tuo username GitHub
-GITHUB_TOKEN  = "your_github_token_here"  # Inserisci qui il tuo GitHub Personal Access Token
-GITLAB_TOKEN  = "your_gitlab_token_here"   # Inserisci qui il tuo GitLab Personal Access Token
+# Configuration
+GITLAB_URL    = "https://gitlab.com/api/v4"
+GITHUB_USERNAME = "bocaletto-luca"  # Your GitHub username
+GITHUB_TOKEN  = "your_github_token_here"  # Replace with your GitHub Personal Access Token
+GITLAB_TOKEN  = "your_gitlab_token_here"   # Replace with your GitLab Personal Access Token
 ```
 
-> **Nota:** Non lasciare mai i token in chiaro in repository pubblici. Per maggiore sicurezza, puoi far sì che lo script legga i token da variabili d'ambiente o da un file di configurazione escluso dal controllo versione.
+> **Security Note:**  
+> **Never** commit your tokens in plain text to public repositories. Consider loading these tokens from secure environment variables or a configuration file that is excluded from version control.
 
-## Utilizzo
+## Usage
 
-Per eseguire lo script e configurare il mirroring per tutti i tuoi repository, utilizza il seguente comando da terminale:
+To start the process and set up mirroring for all your repositories, simply run:
 
 ```bash
 python3 github_to_gitlab_auto_update.py
 ```
 
-Lo script:
-- Recupererà l'elenco dei progetti GitLab di cui sei membro.
-- Per ciascun progetto, costruirà l'URL del repository su GitHub basandosi sul nome.
-- Configurerà il mirroring su GitLab per sincronizzare automaticamente il repository da GitHub.
+The script will:
+- Retrieve all GitLab projects you are a member of.
+- Construct the corresponding GitHub repository URLs.
+- Configure each GitLab project with mirroring settings to the GitHub repository.
 
-## Come Funziona
+## How It Works
 
-1. **Recupero dei Progetti:**  
-   Utilizza l'API di GitLab per ottenere tutti i progetti in cui il tuo account è membro, gestendo la paginazione.
+1. **Fetching Projects:**  
+   The script uses the GitLab API endpoint `/projects` to fetch all projects associated with your account. Pagination is handled to ensure all projects are retrieved.
 
-2. **Costruzione dell'URL GitHub:**  
-   Per ogni progetto, lo script genera l'URL in base al nome del repository, così che corrisponda a `https://github.com/bocaletto-luca/<project_name>.git`.
+2. **Building Repository URLs:**  
+   For every GitLab project, the script constructs the matching GitHub repository URL in this format:  
+   `https://github.com/bocaletto-luca/<project_name>.git`  
+   Ensure that your GitLab project names match those on GitHub.
 
-3. **Configurazione del Mirroring:**  
-   Con una chiamata PUT all'API di GitLab, lo script imposta il mirroring specificando:
-   - `import_url`: URL del repository GitHub.
-   - `mirror`: Abilitato (true).
-   - `username` e `password`: Le credenziali GitHub per effettuare il pull dalle repository.
+3. **Setting Up Mirroring:**  
+   The script sends an HTTP PUT request to the GitLab API to configure the mirroring. It passes the GitHub repository URL along with your GitHub credentials (using the PAT) to enable automatic updates.
 
-## Contributi
+## Contributing
 
-Contributi, suggerimenti e segnalazioni di bug sono benvenuti!  
-Se desideri contribuire a **GitHub to GitLab Auto Update**, apri una issue o, meglio ancora, invia una pull request con le tue migliorie.
+Contributions, suggestions, and bug reports are greatly appreciated!  
+If you have any improvements to propose, please open an issue or submit a pull request.
 
-## Licenza
+## License
 
-Distribuito con licenza MIT. Consulta il file [LICENSE](LICENSE) per maggiori dettagli.
+This project is released under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
-Creato da **bocaletto-luca**.
+Created by **bocaletto-luca**
 
 ---

